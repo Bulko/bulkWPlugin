@@ -1,0 +1,2 @@
+# bulkWPlugin
+basic wordpress plugin 
