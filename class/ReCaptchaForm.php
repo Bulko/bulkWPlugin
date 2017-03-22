@@ -38,6 +38,7 @@ class ReCaptchaForm
 		add_action( 'login_form', array( $this, 'displayCaptcha' ) );
 		add_action( 'register_form', array( $this, 'displayCaptcha' ) );
 		add_action( 'lostpassword_form', array( $this, 'displayCaptcha' ) );
+		add_action( 'login_enqueue_scripts', array( $this, 'cssCaptcha' ) );
 
 		// authenticate the captcha answer
 		add_action( 'wp_authenticate_user', array( $this, 'validateCaptchaLogin' ), 10, 2 );
@@ -57,6 +58,20 @@ class ReCaptchaForm
 	{
 		echo "<script src='https://www.google.com/recaptcha/api.js'></script>";
 		echo "<div class='g-recaptcha' data-theme='ight' data-sitekey='" . $this->publicKey . "' ></div>";
+		return true;
+	}
+
+	/**
+	 * cssCaptcha
+	 *
+	 *@author Audrey <a-le@bulko.net>
+	 *@since ADVE 1.0.0
+	 *@see https://codex.wordpress.org/Customizing_the_Login_Form
+	 *@return boolean
+	 */
+	public function cssCaptcha()
+	{
+		wp_enqueue_style( 'reCaptcha-login', plugins_url( "../css/login.css", __FILE__ ) );
 		return true;
 	}
 

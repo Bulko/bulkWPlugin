@@ -1,0 +1,17 @@
+.login h1 a{
+	width: 100%;
+	background-image: url("http://www.sejoursvacancesendirect.org/wp-content/themes/adve24/img/logo_adve.png") !important;
+	background-size: auto;
+}
+.login .g-recaptcha{
+		-webkit-transform: scale(0.9);
+		   -moz-transform: scale(0.9);
+			-ms-transform: scale(0.9);
+			 -o-transform: scale(0.9);
+				transform: scale(0.9);
+		-webkit-transform-origin: 0 0;
+		   -moz-transform-origin: 0 0;
+			-ms-transform-origin: 0 0;
+			 -o-transform-origin: 0 0;
+				transform-origin: 0 0;
+}
