@@ -89,7 +89,7 @@ class Realisation extends Core
 
 		<p>
 			<label for="fiche_pdf_url"><?php _e( 'URL', 'fiche_pdf' ); ?></label><br>
-			<input type="text" name="fiche_pdf_url" id="fiche_pdf_url" class="image_path_text" value="<?php echo $this->getMeta( 'fiche_pdf_url' ); ?>"><input type="button" id="upload-btn" class="button-secondary media_upload_aa" value="Choisir un fichier">
+			<input type="text" name="fiche_pdf_url" id="fiche_pdf_url" class="image_path_text" value="<?php echo $this->getMeta( 'fiche_pdf_url' ); ?>"><input type="button" id="upload-btn" class="button-secondary media_upload_bko" value="Choisir un fichier">
 		</p><?php
 	}
 
@@ -109,7 +109,7 @@ class Realisation extends Core
 		<button class="display_button button-secondary">Ajouter une image</button>
 		<p class="model">
 			<label for="images_slider_url">URL</label><br>
-			<input type="text" name="images_slider_url[]" class="image_path_text" value=""><input type="button" id="upload-btn" class="button-secondary media_upload_aa" value="Choisir un fichier"><a class="delete_image_aa"> <span class="dashicons dashicons-no-alt bigger"></span> </a>
+			<input type="text" name="images_slider_url[]" class="image_path_text" value=""><input type="button" id="upload-btn" class="button-secondary media_upload_bko" value="Choisir un fichier"><a class="delete_image_bko"> <span class="dashicons dashicons-no-alt bigger"></span> </a>
 		</p>		
 
 		<?php 
@@ -122,7 +122,7 @@ class Realisation extends Core
 			?>
 			<p class="image_slider">
 				<label for="images_slider_url">URL</label><br>
-				<input type="text" name="images_slider_url[]" class="image_path_text" value="<?php echo $image; ?>"><input type="button" id="upload-btn" class="button-secondary media_upload_aa" value="Choisir un fichier"><a class="delete_image_aa"> <span class="dashicons dashicons-no-alt bigger"></span> </a>
+				<input type="text" name="images_slider_url[]" class="image_path_text" value="<?php echo $image; ?>"><input type="button" id="upload-btn" class="button-secondary media_upload_bko" value="Choisir un fichier"><a class="delete_image_bko"> <span class="dashicons dashicons-no-alt bigger"></span> </a>
 			</p>
 			<?php
 			}
