@@ -77,12 +77,12 @@ class BulkInit{
 	public function initObj()
 	{
 		//TODO :  refactor with loop
-		require_once( constant( $this->pluginName . _PLUGIN_CLASS_DIR ) . '/Core.php' );
-		require_once( constant( $this->pluginName . _PLUGIN_CLASS_DIR ) . '/Realisation.php' );
-		require_once( constant( $this->pluginName . _PLUGIN_CLASS_DIR ) . '/MetaBox.php' );
-		require_once( constant( $this->pluginName . _PLUGIN_CLASS_DIR ) . '/User.php' );
-		require_once( constant( $this->pluginName . _PLUGIN_CLASS_DIR ) . '/Color.php' );
-		require_once( constant( $this->pluginName . _PLUGIN_CLASS_DIR ) . '/ReCaptchaForm.php' );
+		require_once( constant( $this->pluginName . '_PLUGIN_CLASS_DIR' ) . '/Core.php' );
+		require_once( constant( $this->pluginName . '_PLUGIN_CLASS_DIR' ) . '/Realisation.php' );
+		require_once( constant( $this->pluginName . '_PLUGIN_CLASS_DIR' ) . '/MetaBox.php' );
+		require_once( constant( $this->pluginName . '_PLUGIN_CLASS_DIR' ) . '/User.php' );
+		require_once( constant( $this->pluginName . '_PLUGIN_CLASS_DIR' ) . '/Color.php' );
+		require_once( constant( $this->pluginName . '_PLUGIN_CLASS_DIR' ) . '/ReCaptchaForm.php' );
 		$BulkObj = array(
 			"Realisation" => new Realisation(),
 			"MetaBox" => new MetaBox(),
