@@ -4,7 +4,7 @@ class Core{
 	 * __construct
 	 *
 	 *@author Golga <r-ro@bulko.net>
-	 *@since 0.1
+	 *@since AA 0.1
 	 *@return boolean
 	 */
 	public function __construct()
@@ -12,23 +12,38 @@ class Core{
 		return true;
 	}
 	/**
-	 * __construct
+	 * hook
 	 *
 	 *@author Golga <r-ro@bulko.net>
-	 *@since 0.1
+	 *@since AA 0.1
 	 *@return boolean
 	 */
 	public function hook()
 	{
 		add_action( 'init', array( $this, 'createPostType' ) );
+		add_action( 'init', array( $this, 'createPostTaxonomy' ) );
 		add_action( 'add_meta_boxes', array( $this, 'addMetaBox' ) );
 		add_action( 'save_post', array( $this, 'saveMetaData' ) );
+		add_action( 'after_setup_theme', array( $this, 'agcThumbnail' ) );
 	}
+
 	/**
-	 * __construct
+	 * createPostTaxonomy
 	 *
 	 *@author Golga <r-ro@bulko.net>
-	 *@since 0.1
+	 *@since 1.0.0 Agc
+	 *@return boolean
+	 */
+	public function createPostTaxonomy()
+	{
+		return true;
+	}
+
+	/**
+	 * createPostType
+	 *
+	 *@author Golga <r-ro@bulko.net>
+	 *@since AA 0.1
 	 *@return boolean
 	 */
 	public function createPostType()
@@ -73,7 +88,7 @@ class Core{
 	 *@author Golga <r-ro@bulko.net>
 	 *@return boolean
 	 */
-	function addMetaBox()
+	public function addMetaBox()
 	{
 		return true;
 	}
@@ -84,7 +99,7 @@ class Core{
 	 *@author Golga <r-ro@bulko.net>
 	 *@return boolean
 	 */
-	function fichePdfHtml( $post )
+	public function fichePdfHtml( $post )
 	{
 		return true;
 	}
@@ -93,18 +108,74 @@ class Core{
 	 * saveMetaData
 	 *
 	 *@author Golga <r-ro@bulko.net>
-	 *@since 0.1
+	 *@since AA 0.1
 	 *@param  Int $post_id
 	 *@return boolean
 	 */
-	function saveMetaData( $post_id )
+	public function saveMetaData( $post_id )
 	{
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 		{
 			return false;
 		}
-		
+
 		return true;
+	}
+
+	/**
+	 *getWithMeta
+	 *@author Golga <r-ro@bulko.net>
+	 *@since AGC 1.0.0
+	 *@param  Array $args argument of wp_query
+	 *@return Array of posts
+	 */
+	public function getWithMeta( Array $args )
+	{
+		$posts = (array) get_posts( $args );
+		return $this->retriveMeta( $posts );
+	}
+
+	/**
+	 *retriveMeta
+	 *@author Golga <r-ro@bulko.net>
+	 *@since AGC 1.0.0
+	 *@param  Array $posts
+	 *@return Array of posts
+	 */
+	public function retriveMeta( Array $posts )
+	{
+		foreach ( $posts as $key => $post )
+		{
+			$posts[$key] = (array) $post;
+			$metas = get_post_meta( $post->ID );
+			foreach ( $metas as $k => $meta )
+			{
+				if ( isset( $meta[1] ) )
+				{
+					$posts[$key][$k] = $meta;
+				}
+				else
+				{
+					$posts[$key][$k] = $meta[0];
+				}
+			}
+			if ( !empty( $posts[$key]["_thumbnail_id"] ) )
+			{
+				$posts[$key]["full-thumbnail"] = wp_get_attachment_image_src( $posts[$key]["_thumbnail_id"], 'single-post-thumbnail' )[0];
+				$posts[$key]["thumbnail"] = wp_get_attachment_image_src( $posts[$key]["_thumbnail_id"], 'thumbnail' )[0];
+				// $posts[$key]["agc-thumbnail"] = wp_get_attachment_image_src( $posts[$key]["_thumbnail_id"], 'agc-thumbnail' )[0];
+			}
+			$posts[$key]["permalink"] =  get_permalink( $post->ID );
+			unset( $metas );
+		}
+		return $posts;
+	}
+
+	public function agcThumbnail()
+	{
+		// add_image_size( 'agc-thumbnail', 500, 270, true ); // (cropped)
+		// @see getRealisationImgHtml in Realisation.php
+		// add_image_size( 'agc-images-realisation', 370, 250, true ); // (cropped)
 	}
 }
 ?>

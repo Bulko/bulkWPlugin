@@ -1,6 +1,6 @@
 jQuery(function ($) {
 	//ADD MEDIA UPLOADER/SELECTOR
-	function upload_image(e, text_input)
+	function upload_image(e, text_input, id_input = null)
 	{
 		// e.preventDefault();
 		var image = wp.media({
@@ -14,8 +14,17 @@ jQuery(function ($) {
 			// We convert uploaded_image to a JSON object to make accessing it easier
 			// Output to the console uploaded_image
 			var image_url = uploaded_image.toJSON().url;
+
 			// Let's assign the url value to the input field
-			$(text_input).val(image_url);
+			if( text_input !== null )
+			{
+				$(text_input).val(image_url);
+			}
+
+			if( id_input !== null )
+			{
+				$(id_input).val( uploaded_image.toJSON().id );
+			}
 			// window.aa_name_img_input[$(text_input).parent().index('.image_slider')] = image_url;
 			// console.log(window.aa_name_img_input);
 		});
@@ -61,4 +70,29 @@ jQuery(function ($) {
 		text_input = $(this).prev('.image_path_text');
 		upload_image(e, text_input);
 	});
+
+	$('.media_upload_single_bko').click( function(e)
+	{
+		text_input = $(this).prev('.image_id');
+		upload_image(e, null, text_input);
+	});
+
+	// Service technique
+	$('.display_button_st').click(function(e)
+	{
+		e.preventDefault();
+		$(this).parent().append('<div class="serial_number"></div>');
+		$(this).parent().children('div').last().append(model);
+		// var upload = $(this).parent().children('div').last().children('.media_upload_bko');
+		// var text_input = upload.prev('.image_path_text');
+		var del = $(this).parent().children('div').last().children('.delete_number_st');
+		// upload.on('click', function(){
+		// 	upload_image(e, text_input);
+		// });
+		del.on('click', function(){
+			delete_image(e, del);
+		});
+	});
+
+
 });

@@ -1,7 +1,7 @@
 <?php
 /*
-Plugin Name: BKO plugin template
-Depends: 
+Plugin Name: Bko plugin template
+Depends:
 Provides: Notre Super Plugin!
 Plugin URI:
 Description: Notre Super Plugin!
@@ -21,9 +21,9 @@ require_once(  plugin_dir_path( __FILE__ ) . '/class/BulkInit.php' );
 
 // TODO use plugin url path in all class file
 
-$pluginName = "BKO";
-define( $pluginName . '_PLUGIN_URL', plugins_url(  '../js/admin.js', __FILE__ ) );
-$$pluginName = new BulkInit($pluginName);
+define( "BKO_PLUGIN_NAME", "bulkPlugin" );
+define( BKO_PLUGIN_NAME . '_PLUGIN_URL', plugins_url(  '../js/admin.js', __FILE__ ) );
+$$pluginName = new BulkInit();
 $plugin = $$pluginName->initObj();
 $$pluginName->initHook();
 
