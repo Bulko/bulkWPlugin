@@ -80,7 +80,7 @@ class Realisation extends Core
 	 *
 	 *@author Golga <r-ro@bulko.net>
 	 *@since AA 0.1 (11/07/2016 219de3a2e59b09fb8f5954b609ea44167536a7d9)
-	 *@param  Post $post
+	 *@param  WP_Post $post
 	 *@return Void
 	 */
 	public function fichePdfHtml( WP_Post $post )
@@ -98,7 +98,7 @@ class Realisation extends Core
 	 *
 	 *@author Golga <r-ro@bulko.net>
 	 *@since AA 0.1 (11/07/2016 219de3a2e59b09fb8f5954b609ea44167536a7d9)
-	 *@param  Post $post
+	 *@param  WP_Post $post
 	 *@return Void
 	 */
 	public function imagesSliderHtml( WP_Post $post )
