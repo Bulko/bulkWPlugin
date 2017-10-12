@@ -84,7 +84,7 @@ class ReCaptchaForm
 	 *@param  String  $password
 	 *@return WP_User
 	 */
-	public function validateCaptchaLogin( $user, $password )
+	public function validateCaptchaLogin( WP_User $user, String $password )
 	{
 		if( $this->isValidRecaptha() === false )
 		{
@@ -148,7 +148,7 @@ class ReCaptchaForm
 	 *@param  Array  $fields
 	 *@return Array
 	 */
-	public function getCurlData( $url, $fields )
+	public function getCurlData( String $url, Array $fields )
 	{
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -169,9 +169,9 @@ class ReCaptchaForm
 	 *
 	 *@author Golga <r-ro@bulko.net>
 	 *@since AA 0.1 (11/07/2016 219de3a2e59b09fb8f5954b609ea44167536a7d9)
-	 *@param  [type] $publicKey
+	 *@param  String  $publicKey
 	 */
-	public function setPrivate( $publicKey )
+	public function setPrivate( String $publicKey )
 	{
 		$this->publicKey = $publicKey;
 	}
@@ -183,7 +183,7 @@ class ReCaptchaForm
 	 *@since AA 0.1 (11/07/2016 219de3a2e59b09fb8f5954b609ea44167536a7d9)
 	 *@param  String $privateKey
 	 */
-	public function setPublic( $privateKey )
+	public function setPublic( String $privateKey )
 	{
 		$this->privateKey = $privateKey;
 	}
@@ -195,7 +195,7 @@ class ReCaptchaForm
 	 *@since AA 0.1 (11/07/2016 219de3a2e59b09fb8f5954b609ea44167536a7d9)
 	 *@param  String $url
 	 */
-	public function setUrl( $url )
+	public function setUrl( String $url )
 	{
 		$this->url = $url;
 	}
@@ -207,7 +207,7 @@ class ReCaptchaForm
 	 *@since AA 0.1 (11/07/2016 219de3a2e59b09fb8f5954b609ea44167536a7d9)
 	 *@param  Boolean $https
 	 */
-	public function setHttps( $https )
+	public function setHttps( Bool $https )
 	{
 		$this->https = $https;
 	}

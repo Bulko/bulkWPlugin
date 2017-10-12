@@ -30,7 +30,7 @@ class MetaBox extends Core
 	 *@author Golga <r-ro@bulko.net>
 	 *@see http://jeremyhixon.com/tool/wordpress-meta-box-generator/
 	 */
-	public function champHtml( $post )
+	public function champHtml( WP_Post $post )
 	{
 		wp_nonce_field( '_champ_supplmentaire_nonce', 'champ_supplmentaire_nonce' ); ?>
 
@@ -53,17 +53,13 @@ class MetaBox extends Core
 	 *@author Golga <r-ro@bulko.net>
 	 *@see http://jeremyhixon.com/tool/wordpress-meta-box-generator/
 	 */
-	public function saveMetaData( $post_id )
+	public function saveMetaData( Int $post_id )
 	{
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
-		{
-			return;
-		}
-		if ( ! isset( $_POST['champ_supplmentaire_nonce'] ) || ! wp_verify_nonce( $_POST['champ_supplmentaire_nonce'], '_champ_supplmentaire_nonce' ) )
-		{
-			return;
-		}
-		if ( ! current_user_can( 'edit_post', $post_id ) )
+		if (
+			( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+			|| ! isset( $_POST['champ_supplmentaire_nonce'] ) || ! wp_verify_nonce( $_POST['champ_supplmentaire_nonce'], '_champ_supplmentaire_nonce' )
+			|| ! current_user_can( 'edit_post', $post_id )
+		)
 		{
 			return;
 		}

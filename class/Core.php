@@ -99,7 +99,7 @@ class Core{
 	 *@author Golga <r-ro@bulko.net>
 	 *@return boolean
 	 */
-	public function fichePdfHtml( $post )
+	public function fichePdfHtml( WP_Post $post )
 	{
 		return true;
 	}
@@ -112,7 +112,7 @@ class Core{
 	 *@param  Int $post_id
 	 *@return boolean
 	 */
-	public function saveMetaData( $post_id )
+	public function saveMetaData( Int $post_id )
 	{
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 		{
@@ -176,6 +176,7 @@ class Core{
 		// add_image_size( 'agc-thumbnail', 500, 270, true ); // (cropped)
 		// @see getRealisationImgHtml in Realisation.php
 		// add_image_size( 'agc-images-realisation', 370, 250, true ); // (cropped)
+		return true;
 	}
 }
 ?>

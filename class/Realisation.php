@@ -83,7 +83,7 @@ class Realisation extends Core
 	 *@param  Post $post
 	 *@return Void
 	 */
-	public function fichePdfHtml( $post )
+	public function fichePdfHtml( WP_Post $post )
 	{
 		wp_nonce_field( '_fiche_pdf_nonce', 'fiche_pdf_nonce' ); ?>
 
@@ -101,18 +101,18 @@ class Realisation extends Core
 	 *@param  Post $post
 	 *@return Void
 	 */
-	public function imagesSliderHtml( $post )
+	public function imagesSliderHtml( WP_Post $post )
 	{
-		wp_nonce_field( '_images_slider_nonce', 'images_slider_nonce' ); 
+		wp_nonce_field( '_images_slider_nonce', 'images_slider_nonce' );
 		?>
 
 		<button class="display_button button-secondary">Ajouter une image</button>
 		<p class="model">
 			<label for="images_slider_url">URL</label><br>
 			<input type="text" name="images_slider_url[]" class="image_path_text" value=""><input type="button" id="upload-btn" class="button-secondary media_upload_bko" value="Choisir un fichier"><a class="delete_image_bko"> <span class="dashicons dashicons-no-alt bigger"></span> </a>
-		</p>		
+		</p>
 
-		<?php 
+		<?php
 
 		$serialized_images = $this->getMeta('images_slider_url');
 		$images = unserialize($serialized_images);
@@ -127,7 +127,7 @@ class Realisation extends Core
 			<?php
 			}
 		}
-		
+
 	}
 
 	/**
@@ -138,7 +138,7 @@ class Realisation extends Core
 	 *@param  int $post_id
 	 *@return boolean
 	 */
-	public function saveMetaData( $post_id )
+	public function saveMetaData( Int $post_id )
 	{
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 		{
