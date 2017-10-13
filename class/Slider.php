@@ -72,10 +72,10 @@ class Slider extends Core
 	 *
 	 *@author Golga <r-ro@bulko.net>
 	 *@since AA 0.1 (11/07/2016 219de3a2e59b09fb8f5954b609ea44167536a7d9)
-	 *@param  Post $post
+	 *@param  WP_Post $post
 	 *@return Void
 	 */
-	public function infoSliderHtml( $post )
+	public function infoSliderHtml( WP_Post $post )
 	{
 		wp_nonce_field( '_avanced_slider_nonce', 'avanced_slider_nonce' );
 		$subtitle = $this->getMeta('subtitle');
@@ -110,7 +110,7 @@ class Slider extends Core
 	 *@param  int $post_id
 	 *@return boolean
 	 */
-	public function saveMetaData( $post_id )
+	public function saveMetaData( Int $post_id )
 	{
 		if (
 			!isset( $_POST['avanced_slider_nonce'] )
