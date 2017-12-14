@@ -25,6 +25,7 @@ class Core{
 		add_action( 'add_meta_boxes', array( $this, 'addMetaBox' ) );
 		add_action( 'save_post', array( $this, 'saveMetaData' ) );
 		add_action( 'after_setup_theme', array( $this, 'agcThumbnail' ) );
+		add_filter( 'body_class', array( $this, 'addBodyClass' ) );
 	}
 
 	/**
@@ -177,6 +178,140 @@ class Core{
 		// @see getRealisationImgHtml in Realisation.php
 		// add_image_size( 'agc-images-realisation', 370, 250, true ); // (cropped)
 		return true;
+	}
+
+
+	/**
+	 *addBodyClass
+	 *@author Golga <r-ro@bulko.net>
+	 *@since AGC 1.0.0
+	 *@see http://php.net/manual/fr/function.get-browser.php && https://gist.github.com/rolandinsh/3510701
+	 *@param  Array $classes
+	 *@return Array
+	 */
+	public function addBodyClass( Array $classes )
+	{
+		$browserInfo = $this->getBrowserInfos();
+		return array_merge( $classes, array( $browserInfo['browserName'], $browserInfo['platform'] ) );
+	}
+
+	/**
+	 *getBrowserInfos
+	 *@author Golga <r-ro@bulko.net>
+	 *@since AGC 1.0.0
+	 *@see http://php.net/manual/fr/function.get-browser.php && https://gist.github.com/rolandinsh/3510701
+	 *@return Array
+	 */
+	public function getBrowserInfos()
+	{
+		$u_agent = $_SERVER['HTTP_USER_AGENT'];
+		$bname = 'Unknown';
+		$platform = 'Unknown';
+		$version = "";
+		$dnt = 0;
+		//First get the platform?
+		if (preg_match('/linux/i', $u_agent))
+		{
+			$platform = 'linux';
+		}
+		elseif (preg_match('/macintosh|mac os x/i', $u_agent))
+		{
+			if ( preg_match('/iPad/i', $u_agent) )
+			{
+				$platform = 'ipad';
+			}
+			else
+			{
+				$platform = 'mac';
+			}
+		}
+		elseif (preg_match('/windows|win32/i', $u_agent))
+		{
+			$platform = 'windows';
+		}
+		// Next get the name of the useragent yes seperately and for good reason
+		if(preg_match('/MSIE/i',$u_agent) && !preg_match('/Opera/i',$u_agent))
+		{
+			$bname = 'InternetExplorer';
+			$ub = "MSIE";
+		}
+		elseif(preg_match('/Edge/i',$u_agent) && !preg_match('/Opera/i',$u_agent))
+		{
+			$bname = 'Edge';
+			$ub = "Edge";
+		}
+		elseif(preg_match('/Firefox/i',$u_agent))
+		{
+			$bname = 'MozillaFirefox';
+			$ub = "Firefox";
+		}
+		elseif(preg_match('/Chrome/i',$u_agent))
+		{
+			$bname = 'GoogleChrome';
+			$ub = "Chrome";
+		}
+		elseif(preg_match('/Safari/i',$u_agent))
+		{
+			$bname = 'AppleSafari';
+			$ub = "Safari";
+		}
+		elseif(preg_match('/Opera/i',$u_agent))
+		{
+			$bname = 'Opera';
+			$ub = "Opera";
+		}
+		elseif(preg_match('/Netscape/i',$u_agent))
+		{
+			$bname = 'Netscape';
+			$ub = "Netscape";
+		}
+		// finally get the correct version number
+		$known = array('Version', $ub, 'other');
+		$pattern = '#(?<browser>' . join('|', $known) .
+		')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
+		if (!preg_match_all($pattern, $u_agent, $matches))
+		{
+			// we have no matching number just continue
+		}
+		// see how many we have
+		$i = count($matches['browser']);
+		if ($i != 1)
+		{
+			//we will have two since we are not using 'other' argument yet
+			//see if version is before or after the name
+			if (strripos($u_agent,"Version") < strripos($u_agent,$ub))
+			{
+				$version= $matches['version'][0];
+			}
+			else
+			{
+				$version= $matches['version'][1];
+			}
+		}
+		else
+		{
+			$version= $matches['version'][0];
+		}
+		// check if we have a number
+		if ($version==null || $version=="")
+		{
+			$version="?";
+		}
+		if ( isset($_SERVER['HTTP_DNT']) && $_SERVER['HTTP_DNT'] == 1 )
+		{
+			$dnt = 1;
+		}
+		return array(
+			'userAgent' => $u_agent,
+			'browserName' => $bname,
+			'browserVersion' => $version,
+			'platform' => $platform,
+			'pattern' => $pattern,
+			'dnt' => $dnt,
+			'request' => $_SERVER["REQUEST_URI"],
+			'host' => $_SERVER["HTTP_HOST"],
+			'time' => date( "Y-m-d h:i:sa" )
+		);
 	}
 }
 ?>
