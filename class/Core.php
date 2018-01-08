@@ -11,21 +11,111 @@ class Core{
 	{
 		return true;
 	}
+
+	/**
+	 *globHooking Hooking helper
+	 *
+	 *@author Golga <r-ro@bulko.net>
+	 *@since Peperiot 1.0.0
+	 *@param  String $type (action||filter)
+	 *@param  String $location
+	 *@param  Array||String $function
+	 *@return Void
+	 */
+	public function globHooking( String $type = 'action', String $location = 'init', $function )
+	{
+		$functionName = "add_" . $type;
+		$functionName( $location, $function );
+	}
+
+	/**
+	 *globHookingA Hooking helper
+	 *
+	 *@author Golga <r-ro@bulko.net>
+	 *@since Peperiot 1.0.0
+	 *@param  String $location
+	 *@param  Array||String $function
+	 *@return Void
+	 */
+	public function globHookingA( String $location = 'init', $function )
+	{
+		$this->globHooking( 'action', $location, [$this, $function] );
+	}
+
+	/**
+	 *globHookingA Hooking helper
+	 *
+	 *@author Golga <r-ro@bulko.net>
+	 *@since Peperiot 1.0.0
+	 *@param  String $location
+	 *@param  Array||String $function
+	 *@return Void
+	 */
+	public function globHookingF( String $location = 'init', $function )
+	{
+		$this->globHooking( 'filter', $location, [$this, $function] );
+	}
+
+	/**
+	 *hooking Hooking helper
+	 *
+	 *@author Golga <r-ro@bulko.net>
+	 *@since Peperiot 1.0.0
+	 *@param  String $type (action||filter)
+	 *@param  String $location
+	 *@param  Array $function
+	 *@return Void
+	 */
+	public function hooking( String $type = 'action', String $location = 'init', String $function )
+	{
+		$this->globHooking( $type, $location, [$this, $function] );
+	}
+
+	/**
+	 *hookingA Hooking helper
+	 *
+	 *@author Golga <r-ro@bulko.net>
+	 *@since Peperiot 1.0.0
+	 *@param  String $type (action||filter)
+	 *@param  String $location
+	 *@param  Array $function
+	 *@return Void
+	 */
+	public function hookingA( String $location = 'init', String $function )
+	{
+		$this->globHooking( 'action', $location, [$this, $function] );
+	}
+
+	/**
+	 *hookingA Hooking helper
+	 *
+	 *@author Golga <r-ro@bulko.net>
+	 *@since Peperiot 1.0.0
+	 *@param  String $type (action||filter)
+	 *@param  String $location
+	 *@param  Array $function
+	 *@return Void
+	 */
+	public function hookingF( String $location = 'init', String $function )
+	{
+		$this->globHooking( 'filter', $location, [$this, $function] );
+	}
+
 	/**
 	 * hook
 	 *
 	 *@author Golga <r-ro@bulko.net>
 	 *@since AA 0.1
-	 *@return boolean
+	 *@return Void
 	 */
 	public function hook()
 	{
-		add_action( 'init', array( $this, 'createPostType' ) );
-		add_action( 'init', array( $this, 'createPostTaxonomy' ) );
-		add_action( 'add_meta_boxes', array( $this, 'addMetaBox' ) );
-		add_action( 'save_post', array( $this, 'saveMetaData' ) );
-		add_action( 'after_setup_theme', array( $this, 'agcThumbnail' ) );
-		add_filter( 'body_class', array( $this, 'addBodyClass' ) );
+		$this->hookingA( 'init', 'createPostType' );
+		$this->hookingA( 'init', 'createPostTaxonomy' );
+		$this->hookingA( 'add_meta_boxes', 'createPostTaxonomy' );
+		$this->hookingA( 'save_post', 'createPostTaxonomy' );
+		$this->hookingA( 'after_setup_theme', 'createPostTaxonomy' );
+		$this->hookingF( 'body_class', 'createPostTaxonomy' );
 	}
 
 	/**
@@ -38,6 +128,21 @@ class Core{
 	public function createPostTaxonomy()
 	{
 		return true;
+	}
+
+	/**
+	 * registerTaxonomyHook
+	 *
+	 *@author Golga <r-ro@bulko.net>
+	 *@since 1.0.0 Peperiot
+	 *@param String $taxonomy
+	 *@return Void
+	 */
+	public function registerTaxonomyHook( String $taxonomy )
+	{
+		$this->hookingA( $taxonomy . '_edit_form_fields', $taxonomy . 'MetaDataHtmlUpdate' );
+		$this->hookingA( 'edited_' . $taxonomy, $taxonomy . 'SaveMetaData' );
+		$this->hookingA( 'created_' . $taxonomy, $taxonomy . 'SaveMetaData' );
 	}
 
 	/**
@@ -90,17 +195,6 @@ class Core{
 	 *@return boolean
 	 */
 	public function addMetaBox()
-	{
-		return true;
-	}
-
-	/**
-	 * addMetaBox
-	 *
-	 *@author Golga <r-ro@bulko.net>
-	 *@return boolean
-	 */
-	public function fichePdfHtml( WP_Post $post )
 	{
 		return true;
 	}
@@ -172,14 +266,35 @@ class Core{
 		return $posts;
 	}
 
-	public function agcThumbnail()
+	/**
+	 *customThumbnail
+	 *@author Golga <r-ro@bulko.net>
+	 *@since AGC 1.0.0
+	 *@return Boolean
+	 */
+	public function customThumbnail()
 	{
 		// add_image_size( 'agc-thumbnail', 500, 270, true ); // (cropped)
-		// @see getRealisationImgHtml in Realisation.php
 		// add_image_size( 'agc-images-realisation', 370, 250, true ); // (cropped)
 		return true;
 	}
 
+	/**
+	 *getTaxonomyTerms
+	 *@author Golga <r-ro@bulko.net>
+	 *@since Peperiot 1.0.0
+	 *@see https://developer.wordpress.org/reference/functions/get_terms/
+	 *@param Bool $hide_empty
+	 *@return Array
+	 */
+	public function getTaxonomyTerms( String $taxonomy, Bool $hide_empty = true )
+	{
+		return (array) get_terms( array(
+			'orderby'		=> 'count',
+			'taxonomy'		=> $taxonomy,
+			'hide_empty'	=> $hide_empty,
+		) );
+	}
 
 	/**
 	 *addBodyClass

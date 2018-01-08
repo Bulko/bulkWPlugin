@@ -75,14 +75,14 @@ class BulkInit{
 	{
 		//TODO :  refactor with loop
 		require_once( constant( BKO_PLUGIN_NAME . '_PLUGIN_CLASS_DIR' ) . '/Core.php' );
-		require_once( constant( BKO_PLUGIN_NAME . '_PLUGIN_CLASS_DIR' ) . '/Realisation.php' );
+		require_once( constant( BKO_PLUGIN_NAME . '_PLUGIN_CLASS_DIR' ) . '/Example.php' );
 		require_once( constant( BKO_PLUGIN_NAME . '_PLUGIN_CLASS_DIR' ) . '/MetaBox.php' );
 		require_once( constant( BKO_PLUGIN_NAME . '_PLUGIN_CLASS_DIR' ) . '/User.php' );
 		require_once( constant( BKO_PLUGIN_NAME . '_PLUGIN_CLASS_DIR' ) . '/Color.php' );
 		require_once( constant( BKO_PLUGIN_NAME . '_PLUGIN_CLASS_DIR' ) . '/ReCaptchaForm.php' );
 		require_once( constant( BKO_PLUGIN_NAME . '_PLUGIN_CLASS_DIR' ) . '/Slider.php' );
 		$BulkObj = array(
-			"Realisation" => new Realisation(),
+			"Example" => new Example(),
 			"MetaBox" => new MetaBox(),
 			"User" => new User(),
 			"Color" => new Color(),
