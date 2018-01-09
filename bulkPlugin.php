@@ -23,6 +23,7 @@ require_once(  plugin_dir_path( __FILE__ ) . '/class/BulkInit.php' );
 
 define( "BKO_PLUGIN_NAME", "bulkPlugin" );
 define( BKO_PLUGIN_NAME . '_PLUGIN_URL', plugins_url(  '../js/admin.js', __FILE__ ) );
+$pluginName = BKO_PLUGIN_NAME;
 $$pluginName = new BulkInit();
 $plugin = $$pluginName->initObj();
 $$pluginName->initHook();
