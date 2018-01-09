@@ -73,22 +73,21 @@ class BulkInit{
 	 */
 	public function initObj()
 	{
-		//TODO :  refactor with loop
+		// First of all requier Core class
 		require_once( constant( BKO_PLUGIN_NAME . '_PLUGIN_CLASS_DIR' ) . '/Core.php' );
-		require_once( constant( BKO_PLUGIN_NAME . '_PLUGIN_CLASS_DIR' ) . '/Example.php' );
-		require_once( constant( BKO_PLUGIN_NAME . '_PLUGIN_CLASS_DIR' ) . '/MetaBox.php' );
-		require_once( constant( BKO_PLUGIN_NAME . '_PLUGIN_CLASS_DIR' ) . '/User.php' );
-		require_once( constant( BKO_PLUGIN_NAME . '_PLUGIN_CLASS_DIR' ) . '/Color.php' );
-		require_once( constant( BKO_PLUGIN_NAME . '_PLUGIN_CLASS_DIR' ) . '/ReCaptchaForm.php' );
-		require_once( constant( BKO_PLUGIN_NAME . '_PLUGIN_CLASS_DIR' ) . '/Slider.php' );
-		$BulkObj = array(
-			"Example" => new Example(),
-			"MetaBox" => new MetaBox(),
-			"User" => new User(),
-			"Color" => new Color(),
-			"ReCaptchaForm" => new ReCaptchaForm(),
-			"Slider" => new Slider(),
+
+		$BulkObj = [];
+		$ClassList = array_diff(
+			scandir( constant( BKO_PLUGIN_NAME . '_PLUGIN_CLASS_DIR' ) ),
+			[ '..', '.', 'BulkInit.php', 'Core.php' ] // Ignore unwanted file
 		);
+
+		foreach ( $ClassList as $key => $ClassFile )
+		{
+			require_once( constant( BKO_PLUGIN_NAME . '_PLUGIN_CLASS_DIR' ) . $ClassFile );
+			$ClassName = substr( $ClassFile, 0, -4 );
+			$BulkObj[$ClassName] = new $ClassName();
+		}
 		$this->BulkObj = (object) $BulkObj;
 		return $this->BulkObj;
 	}
