@@ -112,10 +112,10 @@ class Core{
 	{
 		$this->hookingA( 'init', 'createPostType' );
 		$this->hookingA( 'init', 'createPostTaxonomy' );
-		$this->hookingA( 'add_meta_boxes', 'createPostTaxonomy' );
-		$this->hookingA( 'save_post', 'createPostTaxonomy' );
-		$this->hookingA( 'after_setup_theme', 'createPostTaxonomy' );
-		$this->hookingF( 'body_class', 'createPostTaxonomy' );
+		$this->hookingA( 'add_meta_boxes', 'addMetaBox' );
+		$this->hookingA( 'save_post', 'saveMetaData' );
+		$this->hookingA( 'after_setup_theme', 'customThumbnail' );
+		$this->hookingF( 'body_class', 'addBodyClass' );
 	}
 
 	/**
