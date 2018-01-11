@@ -218,7 +218,7 @@ class Slider extends Core
 						$html .= nl2br( $slide["subtitle"] );
 						$html .= "</div>";
 					}
-					$html .= "<button class='read-more'>En savoire +</button>";
+					$html .= "<button class='read-more'>En savoir +</button>";
 					$html .= "</div>";
 					$html .= "</a>";
 				}
