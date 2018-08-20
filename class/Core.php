@@ -116,8 +116,24 @@ class Core{
 		$this->hookingA( 'save_post', 'saveMetaData' );
 		$this->hookingA( 'after_setup_theme', 'customThumbnail' );
 		$this->hookingF( 'body_class', 'addBodyClass' );
+		$this->hookingF( 'upload_mimes', 'svgMinesTypes' );
 	}
 
+	/**
+	 * @author Golga <r-ro@bulko.net>
+	 * @since must 1.0.0 ( 2018-08-20 )
+	 * @see https://css-tricks.com/snippets/wordpress/allow-svg-through-wordpress-media-uploader/
+	 *
+	 * @param Array $mimes
+	 * @return Array
+	 */
+	public function svgMinesTypes( Array $mimes )
+	{
+		$mimes['svg'] = 'image/svg+xml';
+		$mimes['svgz'] = 'image/svg+xml';
+		return $mimes;
+	}
+	
 	/**
 	 * createPostTaxonomy
 	 *
