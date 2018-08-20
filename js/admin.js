@@ -63,4 +63,15 @@ jQuery( function ($) {
 	$('.media_upload_single_bko').on( "click", function(){
 		upload_image( null, $(this).prev('.image_id') );
 	});
+	// SVG Preview in media galery
+	const el = document.getElementById('tmpl-attachment');
+	const pos = el.outerHTML.indexOf('<# } else if ( \'image\' === data.type && data.sizes ) { #>');
+	const text = '<# } else if ( \'svg+xml\' === data.subtype ) { #>\n' +
+		'<div class="centered">\n' +
+			'<img src="{{ data.url }}" class="thumbnail" draggable="false" />\n' +
+		'</div>\n' +
+		'<div class="filename">' +
+			'<div>{{ data.filename }}</div>' +
+		'</div>';
+	el.outerHTML = [el.outerHTML.slice(0, pos), text, el.outerHTML.slice(pos)].join('');
 });
